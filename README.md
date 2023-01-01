@@ -1,4 +1,4 @@
-# bookshelf-api
+# Bookshelf API
 
 Tugas submission dari kelas "Belajar Membuat Aplikasi Back-End untuk Pemula", [Dicoding](https://www.dicoding.com/)
 
@@ -12,6 +12,7 @@ Tugas ini bertujuan membuat sebuah **Bookshelf API** yang harus memenuhi kriteri
 
 Tugas ini menggunakan tools dan library :
 
+- Hapi.js
 - [nodemon](https://www.npmjs.com/package/nodemon)
 - eslint
 - prettier

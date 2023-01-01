@@ -1,0 +1,33 @@
+{
+  "name": "bookshelf-api",
+  "version": "1.0.0",
+  "description": "Tugas submission dari kelas \"Belajar Membuat Aplikasi Back-End untuk Pemula\", [Dicoding](https://www.dicoding.com/)",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/server.js",
+    "lint": "eslint ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Rerique/bookshelf-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rerique/bookshelf-api/issues"
+  },
+  "homepage": "https://github.com/Rerique/bookshelf-api#readme",
+  "devDependencies": {
+    "eslint": "^8.31.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.20",
+    "prettier": "2.8.1"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.1.0",
+    "nanoid": "^3.3.4"
+  }
+}
