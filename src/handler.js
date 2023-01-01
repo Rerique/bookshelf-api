@@ -36,6 +36,25 @@ const addBook = (request, h) => {
 
   const isSuccess = books.filter((book) => book.id === id).length > 0;
 
+  if (name === undefined) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. Mohon isi nama buku',
+    });
+    response.code(400);
+    return response;
+  }
+
+  if (readPage > pageCount) {
+    const response = h.response({
+      status: 'fail',
+      message:
+        'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
+    });
+    response.code(400);
+    return response;
+  }
+
   if (isSuccess) {
     const response = h.response({
       status: 'success',
@@ -45,21 +64,6 @@ const addBook = (request, h) => {
       },
     });
     response.code(201);
-    return response;
-  } else if (name === undefined) {
-    const response = h.response({
-      status: 'fail',
-      message: 'Gagal menambahkan buku. Mohon isi nama buku',
-    });
-    response.code(400);
-    return response;
-  } else if (readPage > pageCount) {
-    const response = h.response({
-      status: 'fail',
-      message:
-        'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
-    });
-    response.code(400);
     return response;
   }
 
@@ -94,4 +98,69 @@ const getBookById = (request, h) => {
   return response;
 };
 
-module.exports = { addBook, getAllBooks, getBookById };
+const editBookById = (request, h) => {
+  const { id } = request.params;
+
+  const {
+    name,
+    year,
+    author,
+    summary,
+    publisher,
+    pageCount,
+    readPage,
+    reading,
+  } = request.payload;
+  const updatedAt = new Date().toISOString();
+
+  const index = books.findIndex((book) => book.id === id);
+
+  if (name === undefined) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. Mohon isi nama buku',
+    });
+    response.code(400);
+    return response;
+  }
+
+  if (readPage > pageCount) {
+    const response = h.response({
+      status: 'fail',
+      message:
+        'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
+    });
+    response.code(400);
+    return response;
+  }
+
+  if (index !== -1) {
+    books[index] = {
+      ...books[index],
+      name,
+      year,
+      author,
+      summary,
+      publisher,
+      pageCount,
+      readPage,
+      reading,
+      updatedAt,
+    };
+    const response = h.response({
+      status: 'success',
+      message: 'Buku berhasil diperbarui',
+    });
+    response.code(200);
+    return response;
+  }
+
+  const response = h.response({
+    status: 'fail',
+    message: 'Gagal memperbarui buku. Id tidak ditemukan',
+  });
+  response.code(404);
+  return response;
+};
+
+module.exports = { addBook, getAllBooks, getBookById, editBookById };
