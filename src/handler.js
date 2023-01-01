@@ -71,22 +71,27 @@ const addBook = (request, h) => {
   return response;
 };
 
-const getAllBooks = (request, h) => {
-  if (books.length !== 0) {
-    const response = h.response({
+const getAllBooks = () => ({ status: 'success', data: { books } });
+
+const getBookById = (request, h) => {
+  const { id } = request.params;
+
+  const book = book.filter((book) => book.id === id)[0];
+  if (book !== undefined) {
+    return {
       status: 'success',
-      data: { books },
-    });
-    response.code(200);
-    return response;
+      data: {
+        book,
+      },
+    };
   }
 
   const response = h.response({
-    status: 'success',
-    data: [],
+    status: 'fail',
+    message: 'Buku tidak ditemukan',
   });
-  response.code(200);
+  response.code(404);
   return response;
 };
 
-module.exports = { addBook, getAllBooks };
+module.exports = { addBook, getAllBooks, getBookById };
