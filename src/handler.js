@@ -71,4 +71,22 @@ const addBook = (request, h) => {
   return response;
 };
 
-module.exports = { addBook };
+const getAllBooks = (request, h) => {
+  if (books.length !== 0) {
+    const response = h.response({
+      status: 'success',
+      data: { books },
+    });
+    response.code(200);
+    return response;
+  }
+
+  const response = h.response({
+    status: 'success',
+    data: [],
+  });
+  response.code(200);
+  return response;
+};
+
+module.exports = { addBook, getAllBooks };
