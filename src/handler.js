@@ -18,24 +18,6 @@ const addBook = (request, h) => {
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
 
-  const newBook = {
-    id,
-    name,
-    year,
-    author,
-    summary,
-    publisher,
-    pageCount,
-    readPage,
-    finished,
-    reading,
-    insertedAt,
-    updatedAt,
-  };
-  books.push(newBook);
-
-  const isSuccess = books.filter((book) => book.id === id).length > 0;
-
   if (name === undefined) {
     const response = h.response({
       status: 'fail',
@@ -55,12 +37,29 @@ const addBook = (request, h) => {
     return response;
   }
 
+  const newBook = {
+    id,
+    name,
+    year,
+    author,
+    summary,
+    publisher,
+    pageCount,
+    readPage,
+    finished,
+    reading,
+    insertedAt,
+    updatedAt,
+  };
+  books.push(newBook);
+
+  const isSuccess = books.filter((book) => book.id === id).length > 0;
   if (isSuccess) {
     const response = h.response({
       status: 'success',
       message: 'Buku berhasil ditambahkan',
       data: {
-        noteId: id,
+        bookId: id,
       },
     });
     response.code(201);
@@ -75,12 +74,21 @@ const addBook = (request, h) => {
   return response;
 };
 
-const getAllBooks = () => ({ status: 'success', data: { books } });
+const getAllBooks = () => ({
+  status: 'success',
+  data: {
+    books: books.map((book) => ({
+      id: book.id,
+      name: book.name,
+      publisher: book.publisher,
+    })),
+  },
+});
 
 const getBookById = (request, h) => {
   const { id } = request.params;
 
-  const book = book.filter((book) => book.id === id)[0];
+  const book = books.filter((book) => book.id === id)[0];
   if (book !== undefined) {
     return {
       status: 'success',
