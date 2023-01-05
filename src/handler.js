@@ -86,16 +86,16 @@ const getAllBooks = () => ({
 });
 
 const getBookById = (request, h) => {
-  const { id } = request.params;
+  const { bookId } = request.params;
 
-  const book = books.filter((book) => book.id === id)[0];
+  const book = books.find((book) => book.id === bookId);
   if (book !== undefined) {
-    return {
+    const response = h.response({
       status: 'success',
-      data: {
-        book,
-      },
-    };
+      data: { book },
+    });
+    response.code(200);
+    return response;
   }
 
   const response = h.response({
@@ -108,7 +108,6 @@ const getBookById = (request, h) => {
 
 const editBookById = (request, h) => {
   const { id } = request.params;
-
   const {
     name,
     year,
