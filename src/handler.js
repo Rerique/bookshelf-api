@@ -76,7 +76,6 @@ const addBook = (request, h) => {
 
 const getAllBooks = (request, h) => {
   const { name, reading, finished } = request.query;
-  console.table(request.query);
 
   if (name !== undefined) {
     const filterName = books.filter((book) =>
